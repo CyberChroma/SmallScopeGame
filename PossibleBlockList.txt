@@ -1,0 +1,28 @@
+Blocks:
+Player
+Wall - Can't Move Past It, Moving Against It A Turn Still Passes
+Enemy Patrol - Patrols A Path And Loops
+Enemy Follow - Moved Directly At The Player, Can Be Blocked By Walls And Killed By Hazards
+Blinking Electricity Hazard - Has Some Amount Of Turns Where It Can Be Walked Over, Then Some Amount of Turns Where It Is A Hazard And Can Kill The Player
+Button - Stand On It To Open Door
+Button Weighted - Button That Only Works If Something Is On It
+Push Block - Block To Push Onto Buttons Or To Block Paths From Enemies
+Battery Block - Block That Needs Power To Do Something, Has Cord Block Coming Out Of It
+Cord Block - Cord On Ground That Is Picked Up When Player Goes Over It, Then Follows Player Until They Touch Electric Block, Then It Powers Battery Block. Could Have Enemy Block With Cord Attached
+Enemy Spawner Block - Only If Enemy Is Killed, It Respawns Enemy. Could Be Used In A Puzzle Where You Have To Lead An Enemy Around And Killing It Is Bad Because It Respawns Blocking Path
+Hole Block - Edge Of Grid, Player Won't Go Off, But Enemies Can
+Falling Block - Purely Aesthetic, Near Beginning Of Level, Set Edge Pieces Can Break Off And Shrink Into Nothing As If Falling Away From Camera
+Cracked Block - Block That Can Only Be Steps On Once, Then It Becomes A Hazards. Could Have To Lead Enemy Through Block To Kill It, Or Could Have To Lead Enemy Around Block So Player Can Still Use
+Swinging Block - Hazard That Moves Back And Forth
+Fire Trail Block - Enemies Could Leave Trail Of Fire That Takes 3 Turns To Go Away
+Rope Block - If Set On Fire, Burns Path Around It, 1 Tile Per Turn, Player Can Cross
+Wooden Block - If Set On Fire, Burns Block, Player Can't Cross
+Spring Block - Moves Player 2 Blocks In Direction, Takes A Turn To Activate
+Invisible Trigger Block - When Player Crosses, Activate Falling Block
+Key Block - Player Picks Up And Has To Move To Door To Open
+Large Enemy - Enemy That Takes Up A 2x2 Region, Needs All 4 Parts To Be Off Edge To Fall
+Faded Arrow Block - Used To Define Path For Patroling Enemies
+Arrow Block - Forces Player Or Enemy To Move In Direction, When Powered It Becomes Spinning Arrow Block
+Spinning Arrow Block - Arrow Block But It Spins Each Turn
+Ice Block - Can't Turn When On, Slide To Next Block
+Slime Block - Stuck For 3 Turns When On

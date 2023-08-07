@@ -1,0 +1,19 @@
+Blocks:
+Player
+Wall - Can't Move Past It, Moving Against It A Turn Still Passes
+Spring - Moves Player 2 Blocks In Direction, Takes A Turn To Activate
+Fire - Always A Hazard To Player And Enemies
+Rolling Boulder - Rolls Forward 1 Block Per Turn, Will Kill Player
+Faded Arrow - Makes Boulder Change Directions, Doesn't Affect Player
+Arrow - Forces Player Or Enemy To Move In Direction
+Spinning Arrow - Arrow Block But It Spins Every 2 Turn
+Cracked - Every X Turns Shadow Grows Then Debris Falls Onto This Block, Will Kill Player
+Homing Enemy - Moved Directly At The Player, Can Be Blocked By Walls, Killed By Hazards, And Falling Into Hole
+Large Enemy - Homing Enemy That Takes Up A 2x2 Region, Needs All 4 Parts To Be Off Edge To Fall
+Hole - Edge Of Grid, Player Won't Go Off, But Enemies Can
+Goal - Players Goes To Next Level
+
+Massive Enemy - 5x5 Homing Enemy In Final Level, Moves 2 Blocks Per Turn, Hazards Don't Kill, Only Stun For A Turn, Only Killed By 5x5 Hole
+
+Invisible Trigger Block - When Player Crosses, Activate Falling Block
+Falling Block - Purely Aesthetic, Near Beginning Of Level, Set Edge Pieces Can Break Off And Shrink Into Nothing As If Falling Away From Camera

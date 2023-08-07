@@ -1,0 +1,27 @@
+Level 1:
+Simple Corridor Movement, Lots Of "Hazards" Going Off Where Player Can't Go, Show That Walls Can Be Run Into, Player Can't Die
+
+Level 2: Force Player To Need To Push Against A Wall To Proceed
+
+
+
+
+
+Level X-2:
+2x2 Enemies
+
+Level X-1:
+No 2x2 Enemies
+
+
+Level X:
+Final Level, More Paths Crumbling, Come Across Exit, Before Player Reaches, Giant 5x5 Enemy Appears, Chases Player Moving 2 Blocks At A Time, Sequence Of Escaping Massive Cube, Walls Can Hide, Springs Can Make You Move Faster, Electric Hazards Can Stun Cube, But Won't Kill. Ends With Large Section With Holes, Must Lead Massive Cube Into 5x5 Hole, Then Can Go Up Final Corridor Without It Catching Up. Move Into Area With Different Background Outside, Camera Stops, Cube Moves Up Off Screen, "Thanks For Playing" Text Comes Up, End
+
+
+
+
+Finish Coming Up With Obstacles And Hazards
+Come Up With How Game Starts - 
+Start On Background, Fade In Grid And Player, Chunks Break Off Until Only Direction Is Up, On Side Fade In WASD And Arrow Keys, When Player Moves Up Then Auto Moving Starts, Go Through Corridors Of Moving Around With More Stuff Breaking And Cutting Off Paths, Then First Real Level Start
+Come Up With How Game Ends - 
+Final Level, More Paths Crumbling, Come Across Exit, Before Player Reaches, Giant 5x5 Enemy Appears, Chases Player Moving 2 Blocks At A Time, Sequence Of Escaping Massive Cube, Walls Can Hide, Springs Can Make You Move Faster, Electric Hazards Can Stun Cube, But Won't Kill. Ends With Large Section With Holes, Must Lead Massive Cube Into 5x5 Hole, Then Can Go Up Final Corridor Without It Catching Up. Move Into Area With Different Background Outside, Camera Stops, Cube Moves Up Off Screen, "Thanks For Playing" Text Comes Up, End

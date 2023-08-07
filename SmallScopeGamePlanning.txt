@@ -1,0 +1,58 @@
+Small Scope Game Planning:
+Goal:
+The goal is for me to make an actual finished complete game in 9 days. The idea is to practice planning something I can actually finish in the time frame, and not to plan something massive and unachievable. Also this should mean I'll have another finished project.
+
+Rules:
+7 days, technically 9 days (Saturday to next Sunday)
+
+Day 1 (Saturday): Only planning, No Unity (Other than making project). Ideally plan as much as possible
+Days 2-8 (Sunday-Next Saturday), Making Game. By Saturday night I have a finished .exe of the game
+Day 9 (Next Sunday): Just publishing (itch.io), and branding (banner, logo, etc.)
+
+I am allowed to change the rules at any time, challenge is a success if I don't have to extend the time
+I am allowed to use any files from any of my previous projects. (Ideally this would just be code, very unlikely to be models)
+This shouldn't be a demo, with the game ending in some unfinished manner, it should be a mini but finished and complete game. I would rather make a super polished and finished pong than a half a 2d platformer with placeholder assets.
+
+Game Planning:
+Very likely to be 2d
+Art style of cubes and simple shapes
+Not making a FPS
+Not making a puzzle game
+Not making an exploration game
+Game that is "action-y"
+Game with "simple" player
+Simple controls, lots of interesting interactions
+Simple camera
+
+Top Down Game
+Cube moving from top down perspective
+Grid based environment, player moves from square to square
+Ideally really pollished interesting movement with squash and stretch
+To be more action-y, always be moving, just change direction
+At start of level, get to end of level
+Other things in level (enemies, hazards, doors) that move each "turn" around the level
+Not everything kills player, can run into walls, you'll just bump into wall and go back to where you were, but turn will still advance, so enemies could be moving towards you.
+
+
+Finish Coming Up With Obstacles And Hazards
+Come Up With How Game Starts - 
+Start On Background, Fade In Grid And Player, Chunks Break Off Until Only Direction Is Up, On Side Fade In WASD And Arrow Keys, When Player Moves Up Then Auto Moving Starts, Go Through Corridors Of Moving Around With More Stuff Breaking And Cutting Off Paths, Then First Real Level Start
+Come Up With How Game Ends - 
+Final Level, More Paths Crumbling, Come Across Exit, Before Player Reaches, Giant 5x5 Enemy Appears, Chases Player Moving 2 Blocks At A Time, Sequence Of Escaping Massive Cube, Walls Can Hide, Springs Can Make You Move Faster, Electric Hazards Can Stun Cube, But Won't Kill. Ends With Large Section With Holes, Must Lead Massive Cube Into 5x5 Hole, Then Can Go Up Final Corridor Without It Catching Up. Move Into Area With Different Background Outside, Camera Stops, Cube Moves Up Off Screen, "Thanks For Playing" Text Comes Up, End
+
+Using List, Make Level Plans
+Come Up With Name
+
+
+Day 1: Planning
+Day 2: Finalize Obstacles + Level Design + Player + Turn Manager + Grid Manager + Simple Hazard + Homing Enemy
+Day 3: Obstacles And Hazards + Level Transition
+Day 4: Rest Of Obstacles And Hazards
+Day 5: Build Levels
+Day 6: Start And End Sequence
+Day 7: Audio
+Day 8: Polish
+Day 9: Publishing
+
+
+
