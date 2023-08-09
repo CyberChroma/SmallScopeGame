@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
     private static Dictionary<Vector2Int, List<GameObject>> gridMap = new Dictionary<Vector2Int, List<GameObject>>();
+    private static Vector2Int playerPosition;
 
-    public static void AddToGrid(GameObject thingToAdd) {
+    public static void AddToGrid(GameObject thingToAdd, bool isPlayer = false) {
         Vector2Int gridPosition = GetGridPosition(thingToAdd);
         AddToGridCommon(thingToAdd, gridPosition);
+        if (isPlayer) {
+            playerPosition = gridPosition;
+        }
     }
 
     public static void AddToGrid(GameObject thingToAdd, Vector2Int newPosition) {
@@ -58,19 +63,33 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public static void MoveObjectInGrid(GameObject thingToDelete, Vector2Int newPosition, Vector2Int oldPosition) {
+    public static void MoveObjectInGrid(GameObject thingToDelete, Vector2Int oldPosition, Vector2Int newPosition, bool isPlayer = false) {
         DeleteFromGrid(thingToDelete, oldPosition);
         AddToGrid(thingToDelete, newPosition);
+        if (isPlayer) {
+            playerPosition = newPosition;
+        }
     }
 
     public static Vector2Int GetGridPosition(GameObject thingToFind) {
         Vector2Int gridPosition = Vector2Int.zero;
-        gridPosition.x = (int)thingToFind.transform.position.x;
-        gridPosition.y = (int)thingToFind.transform.position.z;
+        gridPosition.x = Mathf.RoundToInt(thingToFind.transform.position.x);
+        gridPosition.y = Mathf.RoundToInt(thingToFind.transform.position.z);
+        return gridPosition;
+    }
+
+    public static Vector2Int GetGridPosition(Vector3 position) {
+        Vector2Int gridPosition = Vector2Int.zero;
+        gridPosition.x = (int)position.x;
+        gridPosition.y = (int)position.z;
         return gridPosition;
     }
 
     public static void ResetGrid() {
         gridMap.Clear();
+    }
+
+    public static Vector2Int GetPlayerPosition() {
+        return playerPosition;
     }
 }

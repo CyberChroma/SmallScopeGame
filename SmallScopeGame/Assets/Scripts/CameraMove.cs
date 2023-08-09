@@ -13,7 +13,7 @@ public class CameraMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerMove>().transform;
+        player = FindObjectOfType<PlayerMove>().GetComponentInChildren<Animator>().transform;
         destinationPosition = new Vector2(player.position.x, player.position.z);
         currentPosition = new Vector2(player.position.x, player.position.z);
         transform.position = new Vector3(destinationPosition.x, 10, destinationPosition.y);

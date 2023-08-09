@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public float timePerTurn = 0.5f;
+    public float timePerTurn = 0.3f;
 
+    private bool turnIsEven = false;
     private PlayerMove playerMove;
-    //public List<EnemyMove> enemyMoves = new List<EnemyMove>();
+    private List<EnemyMove> enemies = new List<EnemyMove>();
+    private List<BoulderMove> boulders = new List<BoulderMove>();
+    private List<ArrowSpin> spinArrows = new List<ArrowSpin>();
+    private List<FallingDebris> fallingDebris = new List<FallingDebris>();
 
     // Start is called before the first frame update
     void Start()
@@ -16,20 +21,83 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(WaitForTurn());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator WaitForTurn() {
         while (true) {
             yield return new WaitForSeconds(timePerTurn);
+            if (turnIsEven) {
+                foreach (ArrowSpin spinArrow in spinArrows) {
+                    spinArrow.Turn();
+                }
+            }
+            foreach (FallingDebris fallingSingleDebris in fallingDebris) {
+                fallingSingleDebris.Fall();
+            }
             playerMove.Move();
+            foreach (EnemyMove enemy in enemies) {
+                enemy.Move();
+            }
+            foreach (BoulderMove boulder in boulders) {
+                boulder.Move();
+            }
+            turnIsEven = !turnIsEven;
         }
+    }
+
+    public void AddEnemy(EnemyMove newEnemy) {
+        if (enemies.Contains(newEnemy)) {
+            return;
+        }
+        enemies.Add(newEnemy);
+    }
+
+    public void RemoveEnemy(EnemyMove enemy) {
+        if (!enemies.Contains(enemy)) {
+            return;
+        }
+        enemies.Remove(enemy);
+    }
+
+    public void AddBoulder(BoulderMove newBoulder) {
+        if (boulders.Contains(newBoulder)) {
+            return;
+        }
+        boulders.Add(newBoulder);
+    }
+
+    public void RemoveBoulder(BoulderMove boulder) {
+        if (!boulders.Contains(boulder)) {
+            return;
+        }
+        boulders.Remove(boulder);
+    }
+
+    public void AddArrow(ArrowSpin newSpinArrow) {
+        if (spinArrows.Contains(newSpinArrow)) {
+            return;
+        }
+        spinArrows.Add(newSpinArrow);
+    }
+
+    public void AddDebris(FallingDebris newFallingDebris) {
+        if (fallingDebris.Contains(newFallingDebris)) {
+            return;
+        }
+        fallingDebris.Add(newFallingDebris);
     }
 
     public void StopTurns() {
         StopAllCoroutines();
+        StartCoroutine(FinalTurn());
+    }
+
+    IEnumerator FinalTurn() {
+        yield return new WaitForSeconds(timePerTurn);
+        playerMove.FinalTurn();
+        foreach (EnemyMove enemy in enemies) {
+            enemy.FinalTurn();
+        }
+        foreach (BoulderMove boulder in boulders) {
+            boulder.FinalTurn();
+        }
     }
 }

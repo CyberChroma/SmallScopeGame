@@ -16,14 +16,17 @@ public class RestartManager : MonoBehaviour
     }
 
     public void StartRespawnProcess() {
+        StopAllCoroutines();
         StartCoroutine(WaitToRespawn());
     }
 
     IEnumerator WaitToRespawn() {
         yield return null;
         turnManager.StopTurns();
-        playerMove.enabled = false;
-        yield return new WaitForSeconds(0.5f);
+        playerMove.canMove = false;
+        yield return new WaitForSeconds(turnManager.timePerTurn - 0.1f);
+        playerMove.StartShrink();
+        yield return new WaitForSeconds(turnManager.timePerTurn);
         GridManager.ResetGrid();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
