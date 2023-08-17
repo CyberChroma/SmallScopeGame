@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArrowSpin : MonoBehaviour
@@ -15,7 +13,7 @@ public class ArrowSpin : MonoBehaviour
     void Start()
     {
         arrow = GetComponent<Arrow>();
-        turnManager = FindObjectOfType<TurnManager>();
+        turnManager = GetComponentInParent<TurnManager>();
         turnManager.AddArrow(this);
         switch (arrow.arrowDirection) {
             case Direction.Up:

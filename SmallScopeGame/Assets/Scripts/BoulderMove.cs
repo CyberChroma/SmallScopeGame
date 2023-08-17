@@ -22,8 +22,8 @@ public class BoulderMove : MonoBehaviour
     void Start() {
         anim = GetComponentInChildren<Animator>();
         body = anim.gameObject;
-        restartManager = FindObjectOfType<RestartManager>();
-        turnManager = FindObjectOfType<TurnManager>();
+        restartManager = GetComponentInParent<RestartManager>();
+        turnManager = restartManager.GetComponent<TurnManager>();
         turnManager.AddBoulder(this);
         nextPosition = GridManager.GetGridPosition(gameObject);
         movingDirection = facingDirection;
@@ -61,6 +61,11 @@ public class BoulderMove : MonoBehaviour
         }
         body.transform.localPosition = position;
         body.transform.localScale = scale;
+
+        AnimatorStateInfo animStateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (animStateInfo.IsName("No Motion")) {
+            transform.position = new Vector3(nextPosition.x, height, nextPosition.y);
+        }
     }
 
     public void Move() {
@@ -122,6 +127,9 @@ public class BoulderMove : MonoBehaviour
             if (thingsAtPoint[0].CompareTag("Enemy")) {
                 ExecuteMove(gridPosition, gridMovePosition);
             }
+            if (thingsAtPoint[0].CompareTag("LargeEnemy")) {
+                ExecuteMove(gridPosition, gridMovePosition);
+            }
             if (thingsAtPoint[0].CompareTag("Player")) {
                 ExecuteMove(gridPosition, gridMovePosition);
             }
@@ -139,6 +147,8 @@ public class BoulderMove : MonoBehaviour
                     restartManager.StartRespawnProcess();
                 } else if (thingInSameSpace.CompareTag("Enemy")) {
                     thingInSameSpace.GetComponent<EnemyMove>().StartDieProcess();
+                } else if (thingInSameSpace.CompareTag("LargeEnemy")) {
+                    thingInSameSpace.GetComponent<LargeEnemyMove>().StartDieProcess();
                 }
             }
         }
@@ -176,8 +186,8 @@ public class BoulderMove : MonoBehaviour
 
     IEnumerator ShrinkToNothing() {
         while (true) {
-            transform.Rotate(Vector3.up * -4);
-            transform.localScale *= 0.97f;
+            transform.Rotate(Vector3.up * -1800 * Time.deltaTime);
+            transform.localScale -= (transform.localScale + (transform.localScale * 8f)) * Time.deltaTime;
             yield return null;
         }
     }

@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 3393496499432410888}
   - component: {fileID: 409659587928478928}
   - component: {fileID: 7367900263855833743}
-  - component: {fileID: 3551760027294386624}
-  - component: {fileID: 25166322197954541}
   - component: {fileID: 6924225037567763745}
   m_Layer: 0
   m_Name: Hole
@@ -86,39 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3551760027294386624
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6218376878832764675}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &25166322197954541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6218376878832764675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa4e4e21016a0c840a524d872194a6dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6924225037567763745
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,8 +23,8 @@ public class EnemyMove : MonoBehaviour
     void Start() {
         anim = GetComponentInChildren<Animator>();
         body = anim.gameObject;
-        restartManager = FindObjectOfType<RestartManager>();
-        turnManager = FindObjectOfType<TurnManager>();
+        restartManager = GetComponentInParent<RestartManager>();
+        turnManager = restartManager.GetComponent<TurnManager>();
         turnManager.AddEnemy(this);
         nextPosition = GridManager.GetGridPosition(gameObject);
         CalculateLookDirection();
@@ -107,7 +107,7 @@ public class EnemyMove : MonoBehaviour
     }
 
     private bool TryMoveOnY(Vector2Int playerDistance) {
-        Vector2Int gridMovePosition = GridManager.GetGridPosition(gameObject);
+        Vector2Int gridMovePosition = nextPosition;
         if (playerDistance.y > 0) {
             gridMovePosition.y++;
         } else {
@@ -117,7 +117,7 @@ public class EnemyMove : MonoBehaviour
     }
 
     private bool TryMoveOnX(Vector2Int playerDistance) {
-        Vector2Int gridMovePosition = GridManager.GetGridPosition(gameObject);
+        Vector2Int gridMovePosition = nextPosition;
         if (playerDistance.x > 0) {
             gridMovePosition.x++;
         } else {
@@ -185,6 +185,11 @@ public class EnemyMove : MonoBehaviour
         }
         body.transform.localPosition = position;
         body.transform.localScale = scale;
+
+        AnimatorStateInfo animStateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (animStateInfo.IsName("No Motion")) {
+            transform.position = new Vector3(nextPosition.x, height, nextPosition.y);
+        }
     }
 
     public void Move() {
@@ -220,11 +225,11 @@ public class EnemyMove : MonoBehaviour
             shouldMove = true;
         } else {
             if (thingsAtPoint[0].CompareTag("Player")) {
-                if (thingsAtPoint.Count > 1 && thingsAtPoint[1].CompareTag("Enemy")) {
+                if (thingsAtPoint.Count > 1 && (thingsAtPoint[1].CompareTag("Enemy") || thingsAtPoint[1].CompareTag("LargeEnemy"))) {
                     anim.SetTrigger("BumpWall");
                 } else {
                     shouldMove = true;
-                    restartManager.StartRespawnProcess();
+                    shouldKill = true;
                 }
             }
             if (thingsAtPoint[0].CompareTag("Hole") || thingsAtPoint[0].CompareTag("Fire")) {
@@ -272,6 +277,10 @@ public class EnemyMove : MonoBehaviour
                     shouldMove = false;
                     anim.SetTrigger("BumpWall");
                 }
+                if (thingAtPoint.CompareTag("LargeEnemy")) {
+                    shouldMove = false;
+                    anim.SetTrigger("BumpWall");
+                }
                 if (thingAtPoint.CompareTag("Boulder")) {
                     Direction invertedDirection = facingDirection;
                     switch (facingDirection) {
@@ -297,13 +306,15 @@ public class EnemyMove : MonoBehaviour
                 }
             }
 
-            if (thingsAtPoint[0].CompareTag("Wall") || thingsAtPoint[0].CompareTag("Enemy") || thingsAtPoint[0].CompareTag("Goal")) {
+            if (thingsAtPoint[0].CompareTag("Wall") || thingsAtPoint[0].CompareTag("Enemy") || thingsAtPoint[0].CompareTag("LargeEnemy") || thingsAtPoint[0].CompareTag("Goal")) {
                 anim.SetTrigger("BumpWall");
                 Vector2Int ourPositon = nextPosition;
                 Vector2Int playerPosition = GridManager.GetPlayerPosition();
                 Vector2Int playerDistance = playerPosition - ourPositon;
                 if (playerDistance == Vector2Int.zero) {
-                    restartManager.StartRespawnProcess();
+                    shouldKill = true;
+                } else {
+                    shouldKill = false;
                 }
                 List<GameObject> thingsAtUs = GridManager.LookInGrid(gridPosition);
                 if (thingsAtUs[0].CompareTag("Cracked") && thingsAtUs[0].GetComponent<FallingDebris>().isDangerous) {
@@ -312,7 +323,6 @@ public class EnemyMove : MonoBehaviour
                     shouldDie = false;
                 }
                 shouldMove = false;
-                shouldKill = false;
             }
         }
         if (shouldMove) {
@@ -359,8 +369,8 @@ public class EnemyMove : MonoBehaviour
 
     IEnumerator ShrinkToNothing() {
         while (true) {
-            transform.Rotate(Vector3.up * -4);
-            transform.localScale *= 0.97f;
+            transform.Rotate(Vector3.up * -1800 * Time.deltaTime);
+            transform.localScale -= (transform.localScale + (transform.localScale * 8f)) * Time.deltaTime;
             yield return null;
         }
     }

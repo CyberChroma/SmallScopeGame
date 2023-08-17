@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
-    [HideInInspector]
     public bool canMove = true;
     public int height = 5;
 
@@ -18,7 +16,7 @@ public class PlayerMove : MonoBehaviour
     private Animator anim;
     private GameObject body;
     private RestartManager restartManager;
-    private TurnManager turnManager;
+    private LevelManager levelManager;
 
     void Awake() {
         GridManager.AddToGrid(gameObject, true);
@@ -30,7 +28,7 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         body = anim.gameObject;
         restartManager = FindObjectOfType<RestartManager>();
-        turnManager = restartManager.GetComponent<TurnManager>();
+        levelManager = restartManager.GetComponent<LevelManager>();
         nextPosition = GridManager.GetGridPosition(gameObject);
     }
 
@@ -40,20 +38,29 @@ public class PlayerMove : MonoBehaviour
         if (!canMove || nextTurnIsArrowMove) {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && facingDirection != Direction.Up) {
             facingDirection = Direction.Up;
+            anim.ResetTrigger("LookDown");
+            anim.ResetTrigger("LookLeft");
+            anim.ResetTrigger("LookRight");
             anim.SetTrigger("LookUp");
-        }
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+        } else if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && facingDirection != Direction.Down) {
             facingDirection = Direction.Down;
+            anim.ResetTrigger("LookUp");
+            anim.ResetTrigger("LookLeft");
+            anim.ResetTrigger("LookRight");
             anim.SetTrigger("LookDown");
-        }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+        } else if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && facingDirection != Direction.Left) {
             facingDirection = Direction.Left;
+            anim.ResetTrigger("LookUp");
+            anim.ResetTrigger("LookDown");
+            anim.ResetTrigger("LookRight");
             anim.SetTrigger("LookLeft");
-        }
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+        } else if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && facingDirection != Direction.Right) {
             facingDirection = Direction.Right;
+            anim.ResetTrigger("LookUp");
+            anim.ResetTrigger("LookLeft");
+            anim.ResetTrigger("LookDown");
             anim.SetTrigger("LookRight");
         }
     }
@@ -90,6 +97,11 @@ public class PlayerMove : MonoBehaviour
         }
         body.transform.localPosition = position;
         body.transform.localScale = scale;
+
+        AnimatorStateInfo animStateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (animStateInfo.IsName("No Motion")) {
+            transform.position = new Vector3(nextPosition.x, height, nextPosition.y);
+        }
     }
 
     public void Move() {
@@ -178,6 +190,10 @@ public class PlayerMove : MonoBehaviour
                     shouldMove = true;
                     elevated = false;
                 }
+                if (thingsAtPoint[0].CompareTag("LargeEnemy")) {
+                    shouldMove = true;
+                    elevated = false;
+                }
                 if (thingsAtPoint[0].CompareTag("Boulder")) {
                     shouldMove = true;
                     elevated = false;
@@ -197,6 +213,9 @@ public class PlayerMove : MonoBehaviour
                     restartManager.StartRespawnProcess();
                 }
                 if (thingsAtPoint[0].CompareTag("Enemy")) {
+                    // Do Nothing
+                }
+                if (thingsAtPoint[0].CompareTag("LargeEnemy")) {
                     // Do Nothing
                 }
                 if (thingsAtPoint[0].CompareTag("Boulder")) {
@@ -222,6 +241,10 @@ public class PlayerMove : MonoBehaviour
                 foreach (GameObject thingAtPoint in thingsAtPoint) {
                     if (thingAtPoint.CompareTag("Enemy")) {
                         shouldMove = false;
+                        shouldSpring = false;
+                    }
+                    if (thingAtPoint.CompareTag("LargeEnemy")) {
+                        shouldMove = true;
                         shouldSpring = false;
                     }
                     if (thingAtPoint.CompareTag("Boulder")) {
@@ -251,10 +274,10 @@ public class PlayerMove : MonoBehaviour
                 }
             }
             if (thingsAtPoint[0].CompareTag("Goal")) {
-                print("YOU WIN!!!! LEVEL COMPLETE!!!");
                 shouldMove = true;
                 elevated = false;
-                turnManager.StopTurns();
+                canMove = false;
+                levelManager.LoadNextLevel();
             }
         }
         if (shouldMove) {
@@ -293,8 +316,8 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator ShrinkToNothing() {
         while(true) {
-            transform.Rotate(Vector3.up * 4);
-            transform.localScale *= 0.97f;
+            transform.Rotate(Vector3.up * 1800 * Time.deltaTime);
+            transform.localScale -= (transform.localScale + (transform.localScale * 8f)) * Time.deltaTime;
             yield return null;
         }
     }

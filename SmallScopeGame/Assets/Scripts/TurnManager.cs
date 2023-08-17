@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -10,6 +9,7 @@ public class TurnManager : MonoBehaviour
     private bool turnIsEven = false;
     private PlayerMove playerMove;
     private List<EnemyMove> enemies = new List<EnemyMove>();
+    private List<LargeEnemyMove> largeEnemies = new List<LargeEnemyMove>();
     private List<BoulderMove> boulders = new List<BoulderMove>();
     private List<ArrowSpin> spinArrows = new List<ArrowSpin>();
     private List<FallingDebris> fallingDebris = new List<FallingDebris>();
@@ -36,6 +36,9 @@ public class TurnManager : MonoBehaviour
             foreach (EnemyMove enemy in enemies) {
                 enemy.Move();
             }
+            foreach (LargeEnemyMove largeEnemy in largeEnemies) {
+                largeEnemy.Move();
+            }
             foreach (BoulderMove boulder in boulders) {
                 boulder.Move();
             }
@@ -55,6 +58,20 @@ public class TurnManager : MonoBehaviour
             return;
         }
         enemies.Remove(enemy);
+    }
+
+    public void AddLargeEnemy(LargeEnemyMove newLargeEnemy) {
+        if (largeEnemies.Contains(newLargeEnemy)) {
+            return;
+        }
+        largeEnemies.Add(newLargeEnemy);
+    }
+
+    public void RemoveLargeEnemy(LargeEnemyMove largeEnemy) {
+        if (!largeEnemies.Contains(largeEnemy)) {
+            return;
+        }
+        largeEnemies.Remove(largeEnemy);
     }
 
     public void AddBoulder(BoulderMove newBoulder) {
@@ -95,6 +112,9 @@ public class TurnManager : MonoBehaviour
         playerMove.FinalTurn();
         foreach (EnemyMove enemy in enemies) {
             enemy.FinalTurn();
+        }
+        foreach (LargeEnemyMove largeEnemy in largeEnemies) {
+            largeEnemy.FinalTurn();
         }
         foreach (BoulderMove boulder in boulders) {
             boulder.FinalTurn();

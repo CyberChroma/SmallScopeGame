@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FallingDebris : MonoBehaviour
@@ -15,7 +13,7 @@ public class FallingDebris : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         GridManager.AddToGrid(gameObject);
-        turnManager = FindObjectOfType<TurnManager>();
+        turnManager = GetComponentInParent<TurnManager>();
         turnManager.AddDebris(this);
         if (isDangerous) {
             anim.SetTrigger("Fall");
